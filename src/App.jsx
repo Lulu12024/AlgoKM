@@ -2281,7 +2281,7 @@ export default function AlgoKB() {
 
                       {/* Onglets */}
                       <div style={{display:"flex",borderBottom:`1px solid ${S.border}`,padding:"0 16px",gap:"2px"}}>
-                        {[["definition","📘 Théorie"],["code","🐍 Python"],["schema","📊 Schéma"],["complexite","⏱ Complexité"]].map(([k,label]) => (
+                        {[["definition","📘 Théorie"],["code","🐍 Python"],["schema","📊 Schéma"]].map(([k,label]) => (
                           <button key={k} onClick={e=>{e.stopPropagation();setOnglet(k);}}
                             style={{padding:"10px 14px",border:"none",borderBottom: onglet===k ? `2px solid ${ch?.color}` : "2px solid transparent",background:"transparent",cursor:"pointer",fontFamily:"inherit",fontSize:"11px",fontWeight: onglet===k ? 600 : 400,color: onglet===k ? ch?.color : S.muted,marginBottom:"-1px"}}>
                             {label}
@@ -2309,22 +2309,6 @@ export default function AlgoKB() {
                           fiche.schema
                             ? <pre style={{margin:0,background:"#f8fafc",border:`1px solid ${S.border}`,borderRadius:"10px",padding:"18px",fontSize:"12px",color:"#334155",overflowX:"auto",whiteSpace:"pre",fontFamily:"'IBM Plex Mono',monospace",lineHeight:1.8}}>{fiche.schema}</pre>
                             : <p style={{color:S.muted,fontSize:"12px"}}>Aucun schéma disponible.</p>
-                        )}
-                        {onglet==="complexite" && (
-                          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(150px,1fr))",gap:"12px"}}>
-                            {[
-                              ["Temps moyen", fiche.complexite.temps_moy],
-                              ["Meilleur cas", fiche.complexite.temps_meil],
-                              ["Pire cas", fiche.complexite.temps_pire],
-                              ["Espace", fiche.complexite.espace],
-                              ["Stable", fiche.complexite.stable===null?"N/A":fiche.complexite.stable?"Oui ✓":"Non ✗"],
-                            ].map(([lbl, val]) => (
-                              <div key={lbl} style={{background:S.bg,border:`1px solid ${S.border}`,borderRadius:"10px",padding:"14px"}}>
-                                <p style={{margin:"0 0 6px",fontSize:"9px",color:S.muted,textTransform:"uppercase",letterSpacing:"0.8px",fontWeight:600}}>{lbl}</p>
-                                <p style={{margin:0,fontSize:"18px",fontWeight:600,color:S.text,fontFamily:"'IBM Plex Mono',monospace"}}>{val}</p>
-                              </div>
-                            ))}
-                          </div>
                         )}
                       </div>
                     </div>
