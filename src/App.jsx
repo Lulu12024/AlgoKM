@@ -1527,16 +1527,305 @@ Coût AMORTI par opération = O(n)/n = O(1) ✓`,
   },
 ];
 
+// ─── Questions Quiz ───────────────────────────────────────────────────────────
+const QUESTIONS = [
+  // ── TEXTE ────────────────────────────────────────────────────────────────
+  { id:1, type:"texte", question:"Quelle est la complexité temporelle dans le pire cas du tri à bulles ?", options:["O(n)","O(n log n)","O(n²)","O(log n)"], correct:2, explication:"Le tri à bulles compare chaque paire d'éléments adjacents à chaque passe → n×(n-1)/2 comparaisons → O(n²)." },
+  { id:2, type:"texte", question:"Quel algorithme de tri garantit O(n log n) dans tous les cas et est stable ?", options:["Tri rapide","Tri par tas","Tri fusion","Tri par insertion"], correct:2, explication:"Le tri fusion divise récursivement et fusionne — O(n log n) garanti et stable. Le tri rapide est O(n²) dans le pire cas et instable." },
+  { id:3, type:"texte", question:"Quelle structure de données utilise le principe LIFO ?", options:["File (Queue)","Liste chaînée","Pile (Stack)","Arbre binaire"], correct:2, explication:"LIFO = Last In, First Out. La pile empile et dépile par le sommet. La file utilise FIFO." },
+  { id:4, type:"texte", question:"Dans un arbre binaire de recherche, où se trouve le minimum ?", options:["À la racine","Dans le sous-arbre droit le plus profond","Dans le sous-arbre gauche le plus profond","Au niveau intermédiaire"], correct:2, explication:"Dans un ABR, les valeurs inférieures sont toujours à gauche. Le minimum est le nœud le plus à gauche." },
+  { id:5, type:"texte", question:"Quel parcours de graphe utilise une file (Queue) ?", options:["DFS","BFS","Dijkstra","Bellman-Ford"], correct:1, explication:"BFS utilise une file pour explorer niveau par niveau. DFS utilise une pile (ou la récursion)." },
+  { id:6, type:"texte", question:"Quelle est la précondition obligatoire pour utiliser la recherche binaire ?", options:["Le tableau doit être trié","Le tableau doit être de taille paire","Les éléments doivent être des entiers","Le tableau doit être en RAM"], correct:0, explication:"La recherche binaire compare avec l'élément médian et élimine la moitié — cela ne fonctionne que sur un tableau trié." },
+  { id:7, type:"texte", question:"Quel algorithme détecte les cycles négatifs dans un graphe ?", options:["Dijkstra","BFS","Bellman-Ford","DFS"], correct:2, explication:"Bellman-Ford relaxe toutes les arêtes V-1 fois. Une V-ième relaxation améliorante signale un cycle négatif." },
+  { id:8, type:"texte", question:"Dans les Tours de Hanoï avec n disques, combien de mouvements faut-il au minimum ?", options:["n²","2n − 1","n log n","2ⁿ − 1"], correct:3, explication:"La récurrence T(n) = 2T(n-1) + 1 donne T(n) = 2ⁿ - 1. Pour 10 disques : 1023 mouvements." },
+  { id:9, type:"texte", question:"Quelle est la complexité du tri par insertion sur un tableau déjà trié ?", options:["O(n²)","O(n log n)","O(n)","O(1)"], correct:2, explication:"Sur un tableau trié, la condition while n'est jamais vraie → exactement n-1 comparaisons → O(n). C'est son meilleur cas." },
+  { id:10, type:"texte", question:"Quelle structure Python utiliser pour implémenter une file efficacement ?", options:["list avec pop(0)","collections.deque","set","tuple"], correct:1, explication:"list.pop(0) est O(n) car il décale tous les éléments. collections.deque garantit O(1) des deux côtés." },
+  { id:11, type:"texte", question:"Quelle complexité a heapify() sur une liste de n éléments ?", options:["O(n log n)","O(n)","O(log n)","O(n²)"], correct:1, explication:"Heapify utilise une technique ascendante sur les nœuds internes → O(n) prouvé mathématiquement, pas O(n log n)." },
+  { id:12, type:"texte", question:"Dans le Théorème Maître, si T(n) = 2T(n/2) + O(n), quelle est la solution ?", options:["O(n)","O(n log n)","O(n²)","O(log n)"], correct:1, explication:"a=2, b=2, k=1 → log₂(2)=1=k → Cas 2 → T(n) = O(n log n). C'est la complexité du tri fusion." },
+
+  // ── QUE RETOURNE CE CODE ? ────────────────────────────────────────────────
+  {
+    id:13, type:"retour",
+    question:"Que retourne cette fonction appelée avec f(5) ?",
+    code:`def f(n):
+    if n <= 1:
+        return n
+    return f(n-1) + f(n-2)
+
+print(f(5))`,
+    options:["3","5","8","13"],
+    correct:1,
+    explication:"f est Fibonacci. f(5) = f(4)+f(3) = (f(3)+f(2))+(f(2)+f(1)) = (2+1)+(1+1) = 5."
+  },
+  {
+    id:14, type:"retour",
+    question:"Que va afficher ce code ?",
+    code:`tab = [3, 1, 4, 1, 5, 9, 2, 6]
+resultat = [x for x in tab if x > 3]
+print(resultat)`,
+    options:["[3, 4, 5, 9, 6]","[4, 5, 9, 6]","[4, 5, 9, 2, 6]","[1, 1, 2]"],
+    correct:1,
+    explication:"La compréhension filtre les éléments strictement supérieurs à 3. Dans [3,1,4,1,5,9,2,6] : 4, 5, 9 et 6 passent le filtre. 3 est exclu car x > 3 (strict)."
+  },
+  {
+    id:15, type:"retour",
+    question:"Quelle est la valeur finale de 'resultat' ?",
+    code:`from collections import deque
+
+pile = []
+pile.append(10)
+pile.append(20)
+pile.append(30)
+pile.pop()
+pile.append(40)
+resultat = pile[-1]`,
+    options:["30","20","40","10"],
+    correct:2,
+    explication:"push(10), push(20), push(30), pop() → retire 30, push(40). La pile est [10, 20, 40]. Le sommet pile[-1] = 40."
+  },
+  {
+    id:16, type:"retour",
+    question:"Que retourne cette fonction avec recherche([1,3,5,7,9], 7) ?",
+    code:`def recherche(tab, cible):
+    g, d = 0, len(tab) - 1
+    while g <= d:
+        m = (g + d) // 2
+        if tab[m] == cible:
+            return m
+        elif tab[m] < cible:
+            g = m + 1
+        else:
+            d = m - 1
+    return -1`,
+    options:["2","3","4","-1"],
+    correct:1,
+    explication:"Tableau [1,3,5,7,9], cherche 7. Étape 1: m=2→tab[2]=5<7→g=3. Étape 2: m=3→tab[3]=7=cible → retourne 3."
+  },
+  {
+    id:17, type:"retour",
+    question:"Que retourne mystery([5, 3, 8, 1, 9]) ?",
+    code:`def mystery(tab):
+    if not tab:
+        return None
+    m = tab[0]
+    for x in tab[1:]:
+        if x < m:
+            m = x
+    return m`,
+    options:["9","5","1","3"],
+    correct:2,
+    explication:"La fonction parcourt le tableau et garde la valeur minimale. Elle compare chaque élément avec m et met à jour si plus petit. Minimum de [5,3,8,1,9] = 1."
+  },
+  {
+    id:18, type:"retour",
+    question:"Quelle est la sortie de ce programme ?",
+    code:`def factorielle(n):
+    if n == 0:
+        return 1
+    return n * factorielle(n - 1)
+
+print(factorielle(0) + factorielle(3))`,
+    options:["6","7","4","1"],
+    correct:1,
+    explication:"factorielle(0) = 1 (cas de base). factorielle(3) = 3×2×1 = 6. Résultat : 1 + 6 = 7."
+  },
+
+  // ── COMPLEXITÉ DE CE CODE ? ───────────────────────────────────────────────
+  {
+    id:19, type:"complexite",
+    question:"Quelle est la complexité temporelle de cette fonction ?",
+    code:`def traiter(tab):
+    n = len(tab)
+    for i in range(n):
+        for j in range(n):
+            print(tab[i] + tab[j])`,
+    options:["O(n)","O(n log n)","O(n²)","O(2n)"],
+    correct:2,
+    explication:"Deux boucles imbriquées de taille n → n × n = n² opérations → O(n²). Typique des algorithmes quadratiques comme le tri à bulles."
+  },
+  {
+    id:20, type:"complexite",
+    question:"Quelle est la complexité de cette fonction récursive ?",
+    code:`def diviser(n):
+    if n <= 1:
+        return
+    diviser(n // 2)
+    diviser(n // 2)`,
+    options:["O(n)","O(log n)","O(n log n)","O(n²)"],
+    correct:0,
+    explication:"T(n) = 2T(n/2) + O(1). Par le Théorème Maître : a=2, b=2, k=0. log₂(2)=1 > 0 → Cas 1 → O(n^1) = O(n)."
+  },
+  {
+    id:21, type:"complexite",
+    question:"Quelle est la complexité de cet algorithme de recherche ?",
+    code:`def chercher(tab, cible):
+    g, d = 0, len(tab) - 1
+    while g <= d:
+        m = (g + d) // 2
+        if tab[m] == cible: return m
+        elif tab[m] < cible: g = m + 1
+        else: d = m - 1
+    return -1`,
+    options:["O(1)","O(log n)","O(n)","O(n log n)"],
+    correct:1,
+    explication:"C'est la recherche binaire. À chaque itération, l'espace de recherche est divisé par 2 → au maximum log₂(n) itérations → O(log n)."
+  },
+  {
+    id:22, type:"complexite",
+    question:"Quelle est la complexité de cette fonction ?",
+    code:`def compter(n):
+    compte = 0
+    i = n
+    while i > 1:
+        i = i // 2
+        compte += 1
+    return compte`,
+    options:["O(n)","O(n²)","O(log n)","O(1)"],
+    correct:2,
+    explication:"La variable i est divisée par 2 à chaque itération : n → n/2 → n/4 → ... → 1. Le nombre d'itérations est log₂(n) → O(log n)."
+  },
+  {
+    id:23, type:"complexite",
+    question:"Quelle est la complexité globale de ce tri ?",
+    code:`def tri(tab):
+    if len(tab) <= 1:
+        return tab
+    m = len(tab) // 2
+    g = tri(tab[:m])
+    d = tri(tab[m:])
+    return fusionner(g, d)  # fusionner est O(n)`,
+    options:["O(n²)","O(n)","O(n log n)","O(log n)"],
+    correct:2,
+    explication:"C'est le tri fusion. T(n) = 2T(n/2) + O(n) → Théorème Maître cas 2 → O(n log n). Garanti dans tous les cas."
+  },
+
+  // ── BUG DANS CE CODE ? ────────────────────────────────────────────────────
+  {
+    id:24, type:"bug",
+    question:"Ce code est censé faire une recherche binaire. Quel est le bug ?",
+    code:`def recherche_bin(tab, cible):
+    g, d = 0, len(tab)  # ← ici
+    while g <= d:
+        m = (g + d) // 2
+        if tab[m] == cible: return m
+        elif tab[m] < cible: g = m + 1
+        else: d = m - 1
+    return -1`,
+    options:[
+      "La condition while devrait être g < d",
+      "d devrait être len(tab) - 1, pas len(tab)",
+      "m devrait être calculé avec g + d // 2",
+      "Il faut retourner True au lieu de m"
+    ],
+    correct:1,
+    explication:"d = len(tab) pointe hors du tableau (indice invalide). Au premier accès tab[m], si m pointe sur la dernière case+1 → IndexError. Correct : d = len(tab) - 1."
+  },
+  {
+    id:25, type:"bug",
+    question:"Cette fonction récursive a un problème. Lequel ?",
+    code:`def somme(n):
+    return n + somme(n - 1)
+
+print(somme(5))`,
+    options:[
+      "La fonction devrait retourner n * somme(n-1)",
+      "Il manque un cas de base — récursion infinie",
+      "Le paramètre devrait être une liste",
+      "Il faut utiliser une boucle for à la place"
+    ],
+    correct:1,
+    explication:"Il manque le cas de base ! Sans 'if n == 0: return 0', la fonction s'appelle infiniment → RecursionError. Correct : ajouter if n <= 0: return 0 en début de fonction."
+  },
+  {
+    id:26, type:"bug",
+    question:"Ce code est censé implémenter une pile. Quel est le bug ?",
+    code:`class Pile:
+    def __init__(self):
+        self.data = []
+
+    def push(self, val):
+        self.data.append(val)
+
+    def pop(self):
+        return self.data.pop(0)  # ← ici`,
+    options:[
+      "append() ne fonctionne pas avec une pile",
+      "pop(0) retire le premier élément (bas) au lieu du dernier (sommet)",
+      "Il faut utiliser insert() au lieu de append()",
+      "La classe devrait hériter de list"
+    ],
+    correct:1,
+    explication:"Une pile est LIFO : on retire par le sommet (dernier entré). pop(0) retire le bas de la liste (FIFO = comportement d'une file). Correct : self.data.pop() sans argument."
+  },
+  {
+    id:27, type:"bug",
+    question:"Ce tri par insertion a un bug subtil. Lequel ?",
+    code:`def tri_insertion(tab):
+    for i in range(len(tab)):  # ← ici
+        cle = tab[i]
+        j = i - 1
+        while j >= 0 and tab[j] > cle:
+            tab[j + 1] = tab[j]
+            j -= 1
+        tab[j + 1] = cle
+    return tab`,
+    options:[
+      "La boucle while devrait utiliser >= au lieu de >",
+      "La boucle for devrait commencer à 1, pas à 0",
+      "cle devrait être tab[i+1]",
+      "Il faut échanger tab[i] et tab[j] directement"
+    ],
+    correct:1,
+    explication:"Quand i=0, j=-1 et tab[j] = tab[-1] accède au dernier élément du tableau en Python — comportement inattendu. La boucle doit commencer à range(1, len(tab)) car le premier élément est déjà 'trié'."
+  },
+];
+
 // ─── Composant Principal ──────────────────────────────────────────────────────
 
 export default function AlgoKB() {
   const [fiches, setFiches] = useState(FICHES);
+  const [landing, setLanding] = useState(true);
   const [chapitreActif, setChapitreActif] = useState("tris");
   const [ficheOuverte, setFicheOuverte] = useState(null);
   const [onglet, setOnglet] = useState("definition");
   const [recherche, setRecherche] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState({ titre:"", chapitre:"tris", niveau:"Débutant", resume:"", definition:"", code:"", schema:"", temps_moy:"", espace:"", stable:"" });
+  const [modeQuiz, setModeQuiz] = useState(false);
+  const [quizQuestions, setQuizQuestions] = useState([]);
+  const [quizIndex, setQuizIndex] = useState(0);
+  const [quizReponses, setQuizReponses] = useState({});
+  const [quizTermine, setQuizTermine] = useState(false);
+  const [quizSelectionne, setQuizSelectionne] = useState(null);
+
+  const demarrerQuiz = () => {
+    const melange = [...QUESTIONS].sort(() => Math.random() - 0.5).slice(0, 10);
+    setQuizQuestions(melange);
+    setQuizIndex(0);
+    setQuizReponses({});
+    setQuizTermine(false);
+    setQuizSelectionne(null);
+    setModeQuiz(true);
+    setRecherche("");
+    setFicheOuverte(null);
+  };
+
+  const choisirReponse = (idx) => {
+    if (quizSelectionne !== null) return;
+    setQuizSelectionne(idx);
+    setQuizReponses(r => ({...r, [quizIndex]: idx}));
+  };
+
+  const questionSuivante = () => {
+    if (quizIndex < quizQuestions.length - 1) {
+      setQuizIndex(i => i+1);
+      setQuizSelectionne(null);
+    } else {
+      setQuizTermine(true);
+    }
+  };
+
+  const scoreQuiz = () => Object.entries(quizReponses).filter(([i, r]) => r === quizQuestions[i].correct).length;
 
   useEffect(() => {
     try { const s = localStorage.getItem("algokb-v2"); if (s) setFiches(JSON.parse(s)); } catch(_) {}
@@ -1576,9 +1865,112 @@ export default function AlgoKB() {
     <div style={{fontFamily:"'IBM Plex Sans',sans-serif",background:S.bg,color:S.text,height:"100vh",display:"flex",flexDirection:"column",overflow:"hidden",margin:0,padding:0,boxSizing:"border-box"}}>
       <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 
+      {/* ══ LANDING PAGE ══ */}
+      {landing && (
+        <div style={{flex:1,overflowY:"auto",background:"#f8fafc"}}>
+          {/* Hero */}
+          <div style={{background:"#0f172a",padding:"60px 40px 80px",textAlign:"center",position:"relative",overflow:"hidden"}}>
+            {/* Grille déco */}
+            <div style={{position:"absolute",inset:0,backgroundImage:"linear-gradient(#1e293b 1px,transparent 1px),linear-gradient(90deg,#1e293b 1px,transparent 1px)",backgroundSize:"40px 40px",opacity:0.4}}/>
+            <div style={{position:"relative",zIndex:1}}>
+              <div style={{display:"inline-flex",alignItems:"center",gap:"10px",background:"#1e293b",border:"1px solid #334155",borderRadius:"12px",padding:"8px 18px",marginBottom:"28px"}}>
+                <span style={{fontFamily:"'IBM Plex Mono',monospace",fontSize:"16px",color:"#3b82f6",fontWeight:600}}>Σ</span>
+                <span style={{fontSize:"13px",color:"#94a3b8",fontFamily:"'IBM Plex Mono',monospace"}}>AlgoKB</span>
+              </div>
+              <h1 style={{margin:"0 0 16px",fontSize:"42px",fontWeight:600,color:"#f1f5f9",lineHeight:1.2}}>
+                Maîtrisez l'Algorithmique<br/>
+                <span style={{color:"#3b82f6"}}>&amp; les Structures de données</span>
+              </h1>
+              <p style={{margin:"0 auto 36px",fontSize:"16px",color:"#94a3b8",lineHeight:1.7,maxWidth:"560px"}}>
+                Une base de connaissances interactive conçue pour les étudiants et enseignants en informatique. Fiches détaillées, code Python, schémas et quiz intégré.
+              </p>
+              <div style={{display:"flex",justifyContent:"center",gap:"12px",flexWrap:"wrap"}}>
+                <button onClick={()=>setLanding(false)}
+                  style={{background:"#3b82f6",border:"none",borderRadius:"10px",color:"#fff",padding:"13px 28px",fontSize:"14px",fontWeight:600,cursor:"pointer",fontFamily:"inherit"}}>
+                  Accéder au cours →
+                </button>
+                <button onClick={()=>{ setLanding(false); setTimeout(()=>{ setModeQuiz(false); const m=[...QUESTIONS].sort(()=>Math.random()-0.5).slice(0,10); setQuizQuestions(m); setQuizIndex(0); setQuizReponses({}); setQuizTermine(false); setQuizSelectionne(null); setModeQuiz(true); },50); }}
+                  style={{background:"transparent",border:"1px solid #334155",borderRadius:"10px",color:"#94a3b8",padding:"13px 28px",fontSize:"14px",fontWeight:500,cursor:"pointer",fontFamily:"inherit"}}>
+                  🎯 Tester mes connaissances
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Statistiques */}
+          <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(150px,1fr))",gap:"1px",background:"#e2e8f0",borderBottom:"1px solid #e2e8f0"}}>
+            {[
+              { val:`${FICHES.length}`, label:"Fiches de cours" },
+              { val:`${CHAPITRES.length}`, label:"Chapitres" },
+              { val:`${QUESTIONS.length}`, label:"Questions de quiz" },
+              { val:"Python", label:"Langage utilisé" },
+            ].map(({val,label}) => (
+              <div key={label} style={{background:"#fff",padding:"24px",textAlign:"center"}}>
+                <div style={{fontSize:"28px",fontWeight:600,color:"#0f172a",fontFamily:"'IBM Plex Mono',monospace"}}>{val}</div>
+                <div style={{fontSize:"11px",color:"#64748b",marginTop:"4px"}}>{label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Chapitres */}
+          <div style={{padding:"48px 40px"}}>
+            <h2 style={{margin:"0 0 8px",fontSize:"22px",fontWeight:600,color:"#0f172a",textAlign:"center"}}>Contenu du cours</h2>
+            <p style={{margin:"0 0 32px",fontSize:"13px",color:"#64748b",textAlign:"center"}}>6 chapitres progressifs, du plus simple au plus avancé</p>
+            <div style={{display:"grid",gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))",gap:"14px",maxWidth:"960px",margin:"0 auto"}}>
+              {CHAPITRES.map(ch => (
+                <div key={ch.id} onClick={()=>{ setChapitreActif(ch.id); setLanding(false); }}
+                  style={{background:"#fff",border:`1px solid ${ch.border}`,borderLeft:`4px solid ${ch.color}`,borderRadius:"12px",padding:"18px 20px",cursor:"pointer",transition:"box-shadow 0.15s"}}>
+                  <div style={{display:"flex",alignItems:"center",gap:"10px",marginBottom:"8px"}}>
+                    <span style={{fontFamily:"'IBM Plex Mono',monospace",fontSize:"11px",color:ch.color,fontWeight:600}}>{ch.num}</span>
+                    <span style={{fontSize:"13px",fontWeight:600,color:"#0f172a"}}>{ch.label}</span>
+                    <span style={{marginLeft:"auto",fontSize:"11px",color:ch.color,background:ch.light,padding:"2px 8px",borderRadius:"10px"}}>{FICHES.filter(f=>f.chapitre===ch.id).length} fiches</span>
+                  </div>
+                  <p style={{margin:0,fontSize:"11px",color:"#64748b",lineHeight:1.6}}>
+                    {ch.id==="tris" && "Bulles, sélection, insertion, fusion, rapide, tas — complexités et implémentations Python."}
+                    {ch.id==="structures" && "Listes, piles, files, arbres, tas, tables de hachage — bases de tout algorithme."}
+                    {ch.id==="graphes" && "BFS, DFS, Dijkstra, Bellman-Ford — parcours et plus courts chemins."}
+                    {ch.id==="recursivite" && "Factorielle, Fibonacci, Hanoï — mémoïsation et programmation dynamique."}
+                    {ch.id==="recherche" && "Recherche linéaire et binaire — quand utiliser laquelle et pourquoi."}
+                    {ch.id==="complexite" && "Big O, Théorème Maître, analyse amortie — mesurer l'efficacité."}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Quiz section */}
+          <div style={{background:"#0f172a",padding:"48px 40px",textAlign:"center"}}>
+            <h2 style={{margin:"0 0 10px",fontSize:"22px",fontWeight:600,color:"#f1f5f9"}}>🎯 Quiz interactif</h2>
+            <p style={{margin:"0 auto 28px",fontSize:"13px",color:"#94a3b8",maxWidth:"480px",lineHeight:1.7}}>
+              {QUESTIONS.length} questions mélangées à chaque session — théorie, analyse de code Python et détection de bugs. Feedback immédiat + score final.
+            </p>
+            <div style={{display:"flex",justifyContent:"center",gap:"20px",flexWrap:"wrap",marginBottom:"28px"}}>
+              {[["🔍","Que retourne ce code ?"],["⏱","Quelle complexité ?"],["🐛","Trouvez le bug"],["📘","Questions de cours"]].map(([icon,label])=>(
+                <div key={label} style={{background:"#1e293b",border:"1px solid #334155",borderRadius:"10px",padding:"12px 18px",display:"flex",alignItems:"center",gap:"8px"}}>
+                  <span style={{fontSize:"16px"}}>{icon}</span>
+                  <span style={{fontSize:"12px",color:"#94a3b8"}}>{label}</span>
+                </div>
+              ))}
+            </div>
+            <button onClick={()=>{ setLanding(false); const m=[...QUESTIONS].sort(()=>Math.random()-0.5).slice(0,10); setQuizQuestions(m); setQuizIndex(0); setQuizReponses({}); setQuizTermine(false); setQuizSelectionne(null); setModeQuiz(true); }}
+              style={{background:"#3b82f6",border:"none",borderRadius:"10px",color:"#fff",padding:"12px 28px",fontSize:"13px",fontWeight:600,cursor:"pointer",fontFamily:"inherit"}}>
+              Démarrer le quiz →
+            </button>
+          </div>
+
+          {/* Footer */}
+          <div style={{padding:"20px 40px",textAlign:"center",borderTop:"1px solid #e2e8f0"}}>
+            <p style={{margin:0,fontSize:"11px",color:"#94a3b8"}}>AlgoKB — Application de Knowledge Management · Algorithmique &amp; Structures de données</p>
+          </div>
+        </div>
+      )}
+
+      {/* ══ APP PRINCIPALE ══ */}
+      {!landing && <>
+
       {/* ── Bandeau supérieur ── */}
       <header style={{background:S.card,borderBottom:`1px solid ${S.border}`,padding:"14px 20px",display:"flex",alignItems:"center",gap:"16px",flexShrink:0}}>
-        <div style={{display:"flex",alignItems:"center",gap:"10px"}}>
+        <div onClick={()=>setLanding(true)} style={{display:"flex",alignItems:"center",gap:"10px",cursor:"pointer"}}>
           <div style={{width:"32px",height:"32px",background:"#0f172a",borderRadius:"8px",display:"flex",alignItems:"center",justifyContent:"center",color:"#f1f5f9",fontSize:"14px",fontFamily:"'IBM Plex Mono',monospace",fontWeight:500}}>Σ</div>
           <div>
             <div style={{fontSize:"14px",fontWeight:600,color:S.text}}>AlgoKB</div>
@@ -1594,7 +1986,7 @@ export default function AlgoKB() {
           <span style={{fontSize:"11px",color:S.muted}}>{fiches.length} fiches · {fiches.filter(f=>f.favori).length} favoris</span>
           <button onClick={()=>setShowForm(v=>!v)}
             style={{background:showForm?"#0f172a":"transparent",border:`1px solid ${showForm?"#0f172a":S.border}`,borderRadius:"8px",color:showForm?"#f8fafc":S.muted,padding:"7px 12px",fontSize:"11px",cursor:"pointer",fontFamily:"inherit"}}>
-            {showForm?"✕ Fermer":""}
+            {showForm?"✕ Fermer":"+ Ajouter"}
           </button>
         </div>
       </header>
@@ -1607,7 +1999,7 @@ export default function AlgoKB() {
             const actif = chapitreActif === ch.id && !recherche;
             const nb = fiches.filter(f => f.chapitre === ch.id).length;
             return (
-              <button key={ch.id} onClick={()=>{ setChapitreActif(ch.id); setRecherche(""); setFicheOuverte(null); }}
+              <button key={ch.id} onClick={()=>{ setChapitreActif(ch.id); setRecherche(""); setFicheOuverte(null); setModeQuiz(false); }}
                 style={{width:"100%",textAlign:"left",padding:"9px 10px",borderRadius:"8px",border:"none",cursor:"pointer",display:"flex",alignItems:"center",gap:"10px",marginBottom:"2px",
                   background: actif ? ch.light : "transparent",
                   color: actif ? ch.color : S.muted,
@@ -1624,17 +2016,174 @@ export default function AlgoKB() {
             {fiches.filter(f=>f.favori).length === 0
               ? <p style={{fontSize:"11px",color:"#cbd5e1",padding:"0 8px"}}>Aucun favori</p>
               : fiches.filter(f=>f.favori).map(f => (
-                  <button key={f.id} onClick={()=>{ setChapitreActif(f.chapitre); setRecherche(""); setFicheOuverte(f); setOnglet("definition"); }}
+                  <button key={f.id} onClick={()=>{ setChapitreActif(f.chapitre); setRecherche(""); setFicheOuverte(f); setOnglet("definition"); setModeQuiz(false); }}
                     style={{width:"100%",textAlign:"left",padding:"6px 10px",borderRadius:"6px",border:"none",cursor:"pointer",background:"transparent",color:S.muted,fontFamily:"inherit",fontSize:"11px",marginBottom:"1px"}}>
                     ★ {f.titre}
                   </button>
                 ))
             }
           </div>
+
+          <div style={{marginTop:"20px",paddingTop:"16px",borderTop:`1px solid ${S.border}`}}>
+            <button onClick={demarrerQuiz}
+              style={{width:"100%",textAlign:"left",padding:"10px 10px",borderRadius:"8px",border:"none",cursor:"pointer",display:"flex",alignItems:"center",gap:"10px",
+                background: modeQuiz ? "#fef9ee" : "transparent",
+                color: modeQuiz ? "#b45309" : S.muted,
+                fontFamily:"inherit",fontSize:"12px",fontWeight: modeQuiz ? 600 : 400}}>
+              <span style={{fontSize:"14px"}}>🎯</span>
+              <span style={{flex:1}}>Quiz — 10 questions</span>
+              <span style={{fontSize:"9px",background: modeQuiz ? "#b4530922" : S.bg,color: modeQuiz ? "#b45309" : "#cbd5e1",padding:"1px 6px",borderRadius:"10px"}}>{QUESTIONS.length}Q</span>
+            </button>
+          </div>
         </aside>
 
         {/* ── Contenu principal ── */}
         <main style={{flex:1,minWidth:0,padding:"24px",overflowY:"auto"}}>
+
+          {/* ── Vue Quiz ── */}
+          {modeQuiz && !quizTermine && quizQuestions.length > 0 && (() => {
+            const q = quizQuestions[quizIndex];
+            const correct = q.correct;
+            return (
+              <div>
+                {/* Barre de progression */}
+                <div style={{display:"flex",alignItems:"center",gap:"12px",marginBottom:"24px"}}>
+                  <span style={{fontSize:"11px",color:S.muted,whiteSpace:"nowrap"}}>Question {quizIndex+1} / {quizQuestions.length}</span>
+                  <div style={{flex:1,height:"6px",background:S.border,borderRadius:"10px",overflow:"hidden"}}>
+                    <div style={{height:"100%",background:"#b45309",borderRadius:"10px",width:`${((quizIndex+1)/quizQuestions.length)*100}%`,transition:"width 0.3s"}}/>
+                  </div>
+                  <span style={{fontSize:"11px",color:"#b45309",fontWeight:600}}>{Math.round(((quizIndex+1)/quizQuestions.length)*100)}%</span>
+                </div>
+
+                {/* Question */}
+                <div style={{background:S.card,border:`1px solid ${S.border}`,borderRadius:"14px",padding:"24px",marginBottom:"16px"}}>
+                  <div style={{display:"flex",alignItems:"center",gap:"8px",marginBottom:"10px"}}>
+                    <span style={{fontSize:"10px",color:S.muted,textTransform:"uppercase",letterSpacing:"1px",fontWeight:600}}>Question {quizIndex+1}</span>
+                    { q.type==="retour" && <span style={{fontSize:"9px",padding:"2px 8px",borderRadius:"10px",background:"#eff6ff",color:"#1d4ed8",fontWeight:600}}>🔍 Que retourne ce code ?</span> }
+                    { q.type==="complexite" && <span style={{fontSize:"9px",padding:"2px 8px",borderRadius:"10px",background:"#fef9ee",color:"#b45309",fontWeight:600}}>⏱ Quelle est la complexité ?</span> }
+                    { q.type==="bug" && <span style={{fontSize:"9px",padding:"2px 8px",borderRadius:"10px",background:"#fff1f2",color:"#be123c",fontWeight:600}}>🐛 Trouvez le bug</span> }
+                  </div>
+                  <h3 style={{margin:"0 0 0",fontSize:"15px",fontWeight:600,color:S.text,lineHeight:1.5}}>{q.question}</h3>
+                </div>
+
+                {/* Bloc de code si présent */}
+                {q.code && (
+                  <div style={{marginBottom:"16px",borderRadius:"12px",overflow:"hidden",border:`1px solid #e2e8f0`}}>
+                    <div style={{background:"#1e293b",padding:"8px 14px",display:"flex",alignItems:"center",gap:"8px"}}>
+                      <div style={{display:"flex",gap:"5px"}}>
+                        <div style={{width:"10px",height:"10px",borderRadius:"50%",background:"#ef4444"}}/>
+                        <div style={{width:"10px",height:"10px",borderRadius:"50%",background:"#f59e0b"}}/>
+                        <div style={{width:"10px",height:"10px",borderRadius:"50%",background:"#22c55e"}}/>
+                      </div>
+                      <span style={{fontSize:"10px",color:"#64748b",marginLeft:"4px",fontFamily:"'IBM Plex Mono',monospace"}}>python</span>
+                    </div>
+                    <pre style={{margin:0,background:"#0f172a",padding:"18px 20px",fontSize:"12.5px",color:"#93c5fd",overflowX:"auto",whiteSpace:"pre",fontFamily:"'IBM Plex Mono',monospace",lineHeight:1.75}}>{q.code}</pre>
+                  </div>
+                )}
+
+                {/* Options */}
+                <div style={{display:"flex",flexDirection:"column",gap:"10px",marginBottom:"20px"}}>
+                  {q.options.map((opt, idx) => {
+                    let bg = S.card, border = S.border, color = S.text;
+                    if (quizSelectionne !== null) {
+                      if (idx === correct) { bg="#f0fdf4"; border="#86efac"; color="#15803d"; }
+                      else if (idx === quizSelectionne && idx !== correct) { bg="#fff1f2"; border="#fda4af"; color="#be123c"; }
+                      else { color=S.muted; }
+                    }
+                    return (
+                      <button key={idx} onClick={()=>choisirReponse(idx)}
+                        style={{background:bg,border:`1px solid ${border}`,borderRadius:"10px",padding:"14px 16px",cursor:quizSelectionne!==null?"default":"pointer",
+                          display:"flex",alignItems:"center",gap:"12px",textAlign:"left",fontFamily:"inherit",transition:"all 0.2s"}}>
+                        <span style={{width:"26px",height:"26px",borderRadius:"50%",border:`1px solid ${border}`,display:"flex",alignItems:"center",justifyContent:"center",
+                          fontSize:"11px",fontWeight:600,color,background:"transparent",flexShrink:0}}>
+                          {["A","B","C","D"][idx]}
+                        </span>
+                        <span style={{fontSize:"13px",color,fontWeight: idx===correct && quizSelectionne!==null ? 600 : 400}}>{opt}</span>
+                        {quizSelectionne !== null && idx === correct && <span style={{marginLeft:"auto",color:"#15803d",fontSize:"16px"}}>✓</span>}
+                        {quizSelectionne !== null && idx === quizSelectionne && idx !== correct && <span style={{marginLeft:"auto",color:"#be123c",fontSize:"16px"}}>✗</span>}
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Explication + bouton suivant */}
+                {quizSelectionne !== null && (
+                  <div>
+                    <div style={{background:"#fefce8",border:"1px solid #fde68a",borderRadius:"10px",padding:"14px 16px",marginBottom:"14px"}}>
+                      <p style={{margin:"0 0 4px",fontSize:"10px",fontWeight:600,color:"#92400e",textTransform:"uppercase",letterSpacing:"0.8px"}}>💡 Explication</p>
+                      <p style={{margin:0,fontSize:"12px",color:"#78350f",lineHeight:1.7}}>{q.explication}</p>
+                    </div>
+                    <div style={{display:"flex",justifyContent:"flex-end"}}>
+                      <button onClick={questionSuivante}
+                        style={{background:"#0f172a",border:"none",borderRadius:"8px",color:"#f8fafc",padding:"10px 22px",fontSize:"12px",cursor:"pointer",fontFamily:"inherit",fontWeight:500}}>
+                        {quizIndex < quizQuestions.length-1 ? "Question suivante →" : "Voir le score →"}
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })()}
+
+          {/* ── Résultat Quiz ── */}
+          {modeQuiz && quizTermine && (() => {
+            const score = scoreQuiz();
+            const pct = Math.round((score/quizQuestions.length)*100);
+            const mention = pct>=80?"Excellent !":pct>=60?"Bien !":pct>=40?"À revoir":"Insuffisant";
+            const couleur = pct>=80?"#15803d":pct>=60?"#1d4ed8":pct>=40?"#b45309":"#be123c";
+            const bgMention = pct>=80?"#f0fdf4":pct>=60?"#eff6ff":pct>=40?"#fef9ee":"#fff1f2";
+            return (
+              <div>
+                {/* Score principal */}
+                <div style={{background:S.card,border:`1px solid ${S.border}`,borderRadius:"16px",padding:"32px",textAlign:"center",marginBottom:"24px"}}>
+                  <div style={{fontSize:"56px",fontWeight:700,color:couleur,fontFamily:"'IBM Plex Mono',monospace",marginBottom:"8px"}}>
+                    {score}<span style={{fontSize:"28px",color:S.muted}}>/{quizQuestions.length}</span>
+                  </div>
+                  <div style={{display:"inline-block",background:bgMention,color:couleur,border:`1px solid ${couleur}44`,borderRadius:"20px",padding:"4px 16px",fontSize:"13px",fontWeight:600,marginBottom:"12px"}}>
+                    {mention}
+                  </div>
+                  <p style={{margin:0,fontSize:"13px",color:S.muted}}>{pct}% de bonnes réponses</p>
+                </div>
+
+                {/* Détail par question */}
+                <h3 style={{fontSize:"13px",fontWeight:600,margin:"0 0 14px",color:S.text}}>Détail des réponses</h3>
+                <div style={{display:"flex",flexDirection:"column",gap:"8px",marginBottom:"24px"}}>
+                  {quizQuestions.map((q,i) => {
+                    const rep = quizReponses[i];
+                    const ok = rep === q.correct;
+                    return (
+                      <div key={i} style={{background:S.card,border:`1px solid ${ok?"#86efac":"#fda4af"}`,borderLeft:`3px solid ${ok?"#15803d":"#be123c"}`,borderRadius:"8px",padding:"12px 14px"}}>
+                        <div style={{display:"flex",alignItems:"flex-start",gap:"10px"}}>
+                          <span style={{fontSize:"14px",flexShrink:0}}>{ok?"✓":"✗"}</span>
+                          <div style={{flex:1}}>
+                            <p style={{margin:"0 0 4px",fontSize:"12px",fontWeight:500,color:S.text}}>{q.question}</p>
+                            <p style={{margin:0,fontSize:"11px",color:ok?"#15803d":"#be123c"}}>
+                              Votre réponse : <strong>{q.options[rep]}</strong>
+                              {!ok && <span style={{color:S.muted}}> → Correct : <strong style={{color:"#15803d"}}>{q.options[q.correct]}</strong></span>}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <div style={{display:"flex",justifyContent:"center",gap:"12px"}}>
+                  <button onClick={demarrerQuiz}
+                    style={{background:"#0f172a",border:"none",borderRadius:"8px",color:"#f8fafc",padding:"10px 22px",fontSize:"12px",cursor:"pointer",fontFamily:"inherit",fontWeight:500}}>
+                    🔄 Recommencer
+                  </button>
+                  <button onClick={()=>setModeQuiz(false)}
+                    style={{background:"transparent",border:`1px solid ${S.border}`,borderRadius:"8px",color:S.muted,padding:"10px 22px",fontSize:"12px",cursor:"pointer",fontFamily:"inherit"}}>
+                    ← Retour aux fiches
+                  </button>
+                </div>
+              </div>
+            );
+          })()}
+
+          {/* ── Contenu normal (masqué pendant le quiz) ── */}
+          {!modeQuiz && <>
 
           {/* Formulaire ajout */}
           {showForm && (
@@ -1790,8 +2339,10 @@ export default function AlgoKB() {
               Aucune fiche pour cette sélection.
             </div>
           )}
+          </>}
         </main>
       </div>
+      </>}
     </div>
   );
 }
